@@ -1,0 +1,17 @@
+# This file is part of SealOS
+
+[Unit]
+Description=SealOS check if any system units or other operations failed after update
+After=default.target graphical.target multi-user.target
+Before=boot-complete.target
+Conflicts=shutdown.target
+Before=shutdown.target
+ConditionPathExists=/data/ionoid/boot/update-os.status
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/sealos-update-check-no-failures.bash
+
+[Install]
+RequiredBy=boot-complete.target
