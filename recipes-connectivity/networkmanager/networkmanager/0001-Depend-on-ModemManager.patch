@@ -1,0 +1,23 @@
+From 970f83e801bf65830e9a369a5a357d21d6bd6c07 Mon Sep 17 00:00:00 2001
+From: Markus Herpich <markus@opendevices.io>
+Date: Tue, 22 Sep 2020 09:18:21 +0200
+Subject: [PATCH] Depend on ModemManager
+
+If ModemManager is started late first call to wherever sim will fail.
+---
+ data/NetworkManager.service.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/data/NetworkManager.service.in b/data/NetworkManager.service.in
+index 91ebd9a..55b1270 100644
+--- a/data/NetworkManager.service.in
++++ b/data/NetworkManager.service.in
+@@ -2,7 +2,7 @@
+ Description=Network Manager
+ Documentation=man:NetworkManager(8)
+ Wants=network.target
+-After=network-pre.target dbus.service
++After=network-pre.target dbus.service ModemManager.service
+ Before=network.target @DISTRO_NETWORK_SERVICE@
+ 
+ [Service]
