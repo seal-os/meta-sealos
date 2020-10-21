@@ -85,8 +85,7 @@ if [ ${data_free} -le 1024 ]; then
     exit 0
 fi
 
-# Mark partition table writable so we can resize and create backups in case
-echo "w" | fdisk "${SEALOS_STORAGE_DEV}"
+# resize partition
 /usr/sbin/parted -s "${SEALOS_STORAGE_DEV}" resizepart ${data_partition_num} 100%
 
 exit 0
