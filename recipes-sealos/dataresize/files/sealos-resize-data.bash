@@ -35,6 +35,7 @@ SEALOS_STORAGE_DEV=""
 while read -r line; do
         if [[ $line == *"${boot_backend_maj}"* ]]; then
                 SEALOS_STORAGE_DEV="$(echo "$line" | cut -d' ' -f1)"
+                break
         fi
 done < <(lsblk -e 7 -p -n -o NAME,MAJ:MIN | grep "^/dev/" -)
 
