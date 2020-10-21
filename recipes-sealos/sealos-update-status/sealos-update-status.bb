@@ -10,6 +10,7 @@ SRC_URI = "file://sealos-update-check-no-failures.bash \
            file://sealos-update-check-no-failures.service"
 
 inherit systemd
+inherit features_check
 
 RDEPENDS_${PN} = "bash"
 

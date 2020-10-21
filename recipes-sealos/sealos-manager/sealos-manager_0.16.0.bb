@@ -1,4 +1,5 @@
 inherit goarch systemd
+inherit features_check
 
 SUMMARY = "SealOS manager agent running on manageable device"
 HOMEPAGE = "https://github.com/opendevices/sealos-manager"
