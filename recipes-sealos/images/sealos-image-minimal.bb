@@ -3,6 +3,7 @@ SUMMARY = "A small image just capable of allowing a device to boot."
 IMAGE_INSTALL = "bash \
                  curl \
                  coreutils \
+                 dataresize \
                  dropbear \
                  file \
                  gnupg \
