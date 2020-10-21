@@ -1,0 +1,13 @@
+[Unit]
+Description=SealOS service to resize data block partition
+DefaultDependencies=no
+Before=sealos-resize-data-fs.service data.mount
+After=boot.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/sealos-resize-data.bash
+
+[Install]
+WantedBy=data.mount
