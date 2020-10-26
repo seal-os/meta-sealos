@@ -27,21 +27,21 @@ boot_backend_maj="$(echo $boot_line | cut -d':' -f1)"
 sector=512
 
 if [ -z "$boot_backend_maj" ]; then
-        echo "Error: failed to locate backing store major, resize /data partition aborted"
-        exit 1
+    echo "Error: failed to locate backing store major, resize /data partition aborted"
+    exit 1
 fi
 
 SEALOS_STORAGE_DEV=""
 while read -r line; do
-        if [[ $line == *"${boot_backend_maj}"* ]]; then
-                SEALOS_STORAGE_DEV="$(echo "$line" | cut -d' ' -f1)"
-                break
-        fi
+    if [[ $line == *"${boot_backend_maj}"* ]]; then
+        SEALOS_STORAGE_DEV="$(echo "$line" | cut -d' ' -f1)"
+        break
+    fi
 done < <(lsblk -e 7 -p -n -o NAME,MAJ:MIN | grep "^/dev/" -)
 
 if [ -z "$SEALOS_STORAGE_DEV" ]; then
-        echo "Error: failed to parse backing store, resize /data partition aborted"
-        exit 1
+    echo "Error: failed to parse backing store, resize /data partition aborted"
+    exit 1
 fi
 
 SEALOS_STORAGE=$(echo "$SEALOS_STORAGE_DEV" | cut -d'/' -f3)
@@ -50,14 +50,14 @@ echo "Info: found backing store at: ${SEALOS_STORAGE_DEV} - ${SEALOS_STORAGE}"
 DATA_STORAGE=""
 DATA_STORAGE_DEV=""
 while read -r line; do
-        if [[ $line == *"${boot_backend_maj}:4"* ]]; then
-                DATA_STORAGE_DEV="$(echo "$line" | cut -d' ' -f1)"
-        fi
+    if [[ $line == *"${boot_backend_maj}:4"* ]]; then
+        DATA_STORAGE_DEV="$(echo "$line" | cut -d' ' -f1)"
+    fi
 done < <(lsblk -e 7 -p -n -l -o NAME,MAJ:MIN)
 
 if [ -z "$DATA_STORAGE_DEV" ]; then
-        echo "Error: failed to find /data partition num 4, resize /data partition aborted"
-        exit 1
+    echo "Error: failed to find /data partition num 4, resize /data partition aborted"
+    exit 1
 fi
 
 DATA_STORAGE=$(echo "$DATA_STORAGE_DEV" | cut -d'/' -f3)
@@ -68,8 +68,8 @@ data_size="$(cat /sys/block/${SEALOS_STORAGE}/${DATA_STORAGE}/size)"
 data_start="$(cat /sys/block/${SEALOS_STORAGE}/${DATA_STORAGE}/start)"
 
 if [ -z "$total" ] || [ -z "$data_size" ] || [ -z "$data_start" ]; then
-        echo "Error: failed to parse /data partition size, resize /data partition aborted"
-        exit 1
+    echo "Error: failed to parse /data partition size, resize /data partition aborted"
+    exit 1
 fi
 
 echo "Info: storage '${SEALOS_STORAGE}' size: '${total}'"
