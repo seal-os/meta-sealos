@@ -75,7 +75,7 @@ fi
 echo "Info: storage '${SEALOS_STORAGE}' size: '${total}'"
 echo "Info: /data partition '${DATA_STORAGE}' current size: '${data_size}'"
 
-data_free="$(expr "${total}" - "$(expr ${data_start} + ${data_size})" || exit 1)"
+data_free="$(expr "${total}" - "$(expr ${data_start} + ${data_size})")"
 
 # sectors of 1 * 512 = 512 bytes
 
